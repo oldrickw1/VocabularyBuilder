@@ -12,11 +12,13 @@ public class Translation {
     public Translation(String foreignWord, List<String> targetLanguageTranslations) {
         this.foreignWord = foreignWord;
         this.targetLanguageTranslations = targetLanguageTranslations;
+        levelOfMastery = LevelOfMastery.NOOB;
     }
 
     public Translation(String foreignWord, String targetLanguageTranslation) {
         this.foreignWord = foreignWord;
         this.targetLanguageTranslation = targetLanguageTranslation;
+
     }
 
     public String getForeignWord() {

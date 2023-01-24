@@ -34,23 +34,22 @@ public class AddTranslation extends AppCompatActivity {
 
         btn_submitTranslation.setOnClickListener(v -> {
             List<String> translationList = new ArrayList<>();
-            if (TextUtils.isEmpty(et_translation1.getText().toString())) {
+
+            for (EditText et: Arrays.asList(et_translation1, et_translation2, et_translation3)) {
+                if (!isEmpty(et)) {
+                    translationList.add(et.getText().toString());
+                }
+            }
+
+            if (translationList.isEmpty()) {
                 return;
             }
-            translationList.add(et_translation1.getText().toString());
-            if (!TextUtils.isEmpty(et_translation2.getText().toString())) {
-                translationList.add(et_translation2.getText().toString());
-            }
-            if (!TextUtils.isEmpty(et_translation3.getText().toString())) {
-                translationList.add(et_translation3.getText().toString());
-            }
             MyApplication.databaseHelper.addOne(new Translation(et_foreignWord.getText().toString(), translationList));
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, MainActivity.class));
         });
+    }
 
-
-
-
+    private boolean isEmpty(EditText editText) {
+        return TextUtils.isEmpty(editText.getText().toString());
     }
 }
