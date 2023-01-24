@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WordBuilder</string>
+    <string name="goToLibrary">Go to Library</string>
+    <string name="practice">Practice Words</string>
+    <string name="addWord">Add a Word</string>
+    <string name="scanNewWords">Scan Words</string>
+    <string name="addTranslation">Add a Translation</string>
+</resources>
