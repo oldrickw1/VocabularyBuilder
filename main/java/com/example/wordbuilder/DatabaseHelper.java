@@ -56,56 +56,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    // TODO: REFACTOR BY USING LAST_INSERT_ID TO GET THE GENERATED ID'S.
     public void addOne(Translation translation) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // inserting into foreign language table
         ContentValues cvForeign = new ContentValues();
         cvForeign.put(FOREIGN_LANGUAGE_COLUMN, translation.getForeignWord());
-        db.insert(FOREIGN_TABLE, null, cvForeign);
+        long foreignId = db.insert(FOREIGN_TABLE, null, cvForeign);
 
         // inserting into target language table
+        List<Long> targetIdList = new ArrayList<>();
         for (String uniqueTranslation : translation.getTargetLanguageTranslations()) {
             ContentValues cvTarget = new ContentValues();
             cvTarget.put(TARGET_LANGUAGE_COLUMN, uniqueTranslation);
-            db.insert(TARGET_TABLE, null, cvTarget);
+            targetIdList.add(db.insert(TARGET_TABLE, null, cvTarget));
         }
 
-        // inserting into join table
-        // we need the 2 foreign id's. Let's read them from db
-        int foreignId = getForeignId(translation, db);
-        List<Integer> targetIdList = getTargetIdList(translation, db);
-
-        // now finally we can insert to the linked table
-        for (int targetId : targetIdList) {
+        // now we can insert to the linked table
+        for (long targetId : targetIdList) {
             ContentValues cv = new ContentValues();
             cv.put(FOREIGN_ID_COLUMN, foreignId);
             cv.put(TARGET_ID_COLUMN, targetId);
             db.insert(JOIN_TABLE, null, cv);
         }
         db.close();
-    }
-
-    @NonNull
-    private List<Integer> getTargetIdList(Translation translation, SQLiteDatabase db) {
-        List<Integer> targetIdList = new ArrayList<>();
-        for (String uniqueTranslation : translation.getTargetLanguageTranslations()) {
-            String query = "SELECT ID FROM " + TARGET_TABLE + " WHERE " + TARGET_LANGUAGE_COLUMN + "='" + uniqueTranslation + "'";
-            Cursor cursor = db.rawQuery(query, null);
-            if (cursor.moveToFirst()) {
-                targetIdList.add(cursor.getInt(0));
-            }
-            cursor.close();
-        }
-        return targetIdList;
-    }
-
-    private int getForeignId(Translation translation, SQLiteDatabase db) {
-        Cursor foreignIdCursor = db.rawQuery("SELECT ID FROM " + FOREIGN_TABLE + " WHERE " + FOREIGN_LANGUAGE_COLUMN + "='" + translation.getForeignWord() + "'", null);
-        int foreignId = foreignIdCursor.moveToFirst() ? foreignIdCursor.getInt(0) :-1;
-        foreignIdCursor.close();
-        return foreignId;
     }
 
     public List<Translation> getTranslations() {

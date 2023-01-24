@@ -23,26 +23,13 @@ public class WordLibrary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_library);
 
-//        fillTranslationsWithDummyData();
         databaseHelper = MyApplication.databaseHelper;
 
         recyclerView = findViewById(R.id.rv_translations);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new recycleViewAdapter(databaseHelper.getTranslations() , this);
+        adapter = new recycleViewAdapter(databaseHelper.getTranslations(), this);
         recyclerView.setAdapter(adapter);
 
     }
-
-//    private void fillTranslationsWithDummyData(){
-//        Translation t1 = new Translation("casa", Arrays.asList("house"));
-//        Translation t2 = new Translation("bomba", Arrays.asList("pump", "bomb"));
-//        Translation t3 = new Translation("el", Arrays.asList("the"));
-//        Translation t4 = new Translation("la", Arrays.asList("the"));
-//        Translation t5 = new Translation("zapato", Arrays.asList("shoe"));
-//        Translation t6 = new Translation("mesa", Arrays.asList("table"));
-//
-//        translations.addAll(Arrays.asList(t1,t2,t3,t4,t5,t6));
-//
-//    }
 }
