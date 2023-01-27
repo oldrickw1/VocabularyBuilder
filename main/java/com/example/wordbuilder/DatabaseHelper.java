@@ -61,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // inserting into foreign language table
         ContentValues cvForeign = new ContentValues();
+
         cvForeign.put(FOREIGN_LANGUAGE_COLUMN, translation.getForeignWord());
         long foreignId = db.insert(FOREIGN_TABLE, null, cvForeign);
 
