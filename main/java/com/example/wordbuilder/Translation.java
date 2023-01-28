@@ -6,7 +6,7 @@ public class Translation {
     private Language targetLanguage;
     private Language foreignLanguage;
     private String foreignWord;
-    private String targetLanguageTranslation;
+    private String targetWord;
     private List<String> targetLanguageTranslations;
     private boolean isBasic;
     private LevelOfMastery levelOfMastery;
@@ -19,9 +19,9 @@ public class Translation {
         levelOfMastery = LevelOfMastery.NOOB;
     }
 
-    public Translation(String foreignWord, String targetLanguageTranslation) {
+    public Translation(String foreignWord, String targetWord) {
         this.foreignWord = foreignWord;
-        this.targetLanguageTranslation = targetLanguageTranslation;
+        this.targetWord = targetWord;
 
     }
 
@@ -57,17 +57,12 @@ public class Translation {
         this.foreignLanguage = foreignLanguage;
     }
 
-    public String getTargetLanguageTranslation() {
-        return targetLanguageTranslation;
+
+    public String getTargetWord() {
+        return targetWord;
     }
-    @Override
-    public String toString() {
-        return "Translation{" +
-                "foreignWord='" + foreignWord + '\'' +
-                ", targetLanguageTranslation='" + targetLanguageTranslation + '\'' +
-                ", targetLanguageTranslations=" + targetLanguageTranslations +
-                ", isBasic=" + isBasic +
-                ", levelOfMastery=" + levelOfMastery +
-                '}';
+
+    public void setTargetWord(String targetWord) {
+        this.targetWord = targetWord;
     }
 }

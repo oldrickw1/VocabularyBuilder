@@ -33,7 +33,7 @@ public class recycleViewAdapter extends RecyclerView.Adapter<recycleViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.tv_foreignWord.setText(translations.get(position).getForeignWord());
-        holder.tv_targetLanguageTranslation.setText(translations.get(position).getTargetLanguageTranslation());
+        holder.tv_targetLanguageTranslation.setText(translations.get(position).getTargetWord());
     }
 
     @Override
