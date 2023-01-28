@@ -29,25 +29,21 @@ public class MainActivity extends AppCompatActivity {
 
         btn_goToLib.setOnClickListener(v -> {
             Intent intent = new Intent(this, WordLibrary.class);
-            Toast.makeText(this, "Going to Word Library", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
 
         btn_practice.setOnClickListener(v -> {
             Intent intent = new Intent(this, Practice.class);
-            Toast.makeText(this, "Going to Practice Activity", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
 
         btn_addWord.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddTranslation.class);
-            Toast.makeText(this, "Going to Add Word Actvity", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         });
 
         btn_scanWords.setOnClickListener(v -> {
 //            Intent intent = new Intent(this, WordScan.class);
-            Toast.makeText(this, "Going to Word Scanner", Toast.LENGTH_SHORT).show();
 //            startActivity(intent);
         });
 
