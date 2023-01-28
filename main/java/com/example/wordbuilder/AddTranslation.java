@@ -44,7 +44,8 @@ public class AddTranslation extends AppCompatActivity {
             if (translationList.isEmpty()) {
                 return;
             }
-            MyApplication.databaseHelper.addOne(new Translation(et_foreignWord.getText().toString(), translationList));
+            Log.i(TAG, "ADDING A NEW TRANSLATION");
+            MyApplication.databaseHelper.addOne(new Translation(Language.SPANISH, Language.ENGLISH, et_foreignWord.getText().toString(), translationList));
             startActivity(new Intent(this, MainActivity.class));
         });
     }

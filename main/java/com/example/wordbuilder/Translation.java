@@ -3,13 +3,17 @@ package com.example.wordbuilder;
 import java.util.List;
 
 public class Translation {
+    private Language targetLanguage;
+    private Language foreignLanguage;
     private String foreignWord;
     private String targetLanguageTranslation;
     private List<String> targetLanguageTranslations;
     private boolean isBasic;
     private LevelOfMastery levelOfMastery;
 
-    public Translation(String foreignWord, List<String> targetLanguageTranslations) {
+    public Translation(Language foreignLanguage, Language targetLanguage, String foreignWord, List<String> targetLanguageTranslations) {
+        this.foreignLanguage = foreignLanguage;
+        this.targetLanguage = targetLanguage;
         this.foreignWord = foreignWord;
         this.targetLanguageTranslations = targetLanguageTranslations;
         levelOfMastery = LevelOfMastery.NOOB;
@@ -35,6 +39,22 @@ public class Translation {
 
     public void setTargetLanguageTranslations(List<String> targetLanguageTranslations) {
         this.targetLanguageTranslations = targetLanguageTranslations;
+    }
+
+    public Language getTargetLanguage() {
+        return targetLanguage;
+    }
+
+    public void setTargetLanguage(Language targetLanguage) {
+        this.targetLanguage = targetLanguage;
+    }
+
+    public Language getForeignLanguage() {
+        return foreignLanguage;
+    }
+
+    public void setForeignLanguage(Language foreignLanguage) {
+        this.foreignLanguage = foreignLanguage;
     }
 
     public String getTargetLanguageTranslation() {
