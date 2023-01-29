@@ -51,7 +51,7 @@ public class AddTranslation extends AppCompatActivity {
         });
     }
 
-    private boolean isEmpty(EditText editText) {
+    public static boolean isEmpty(EditText editText) {
         return TextUtils.isEmpty(editText.getText().toString());
     }
 }

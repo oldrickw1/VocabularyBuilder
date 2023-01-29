@@ -8,31 +8,28 @@
 
     <Button
         android:id="@+id/btn_option1"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="130dp"
-        android:text="Button"
         app:layout_constraintEnd_toStartOf="@+id/btn_option2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_toBePracticed" />
 
     <Button
         android:id="@+id/btn_option3"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_option2"
         app:layout_constraintTop_toTopOf="@+id/btn_option2" />
 
     <Button
         android:id="@+id/btn_option2"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Button"
+        app:layout_constraintEnd_toStartOf="@+id/btn_option3"
         app:layout_constraintStart_toEndOf="@+id/btn_option1"
-        app:layout_constraintTop_toTopOf="@+id/btn_option1"
-        app:layout_constraintEnd_toStartOf="@+id/btn_option3"/>
+        app:layout_constraintTop_toTopOf="@+id/btn_option1" />
 
     <TextView
         android:id="@+id/tv_toBePracticed"
