@@ -19,6 +19,7 @@ import java.util.Random;
 
 public class Practice extends AppCompatActivity {
     //TODO add better navigation instead of just relying on the back button
+    //TODO add unique constraint to button options
     //TODO when a word is guessed correctly, update the level of mastery. Use the level of mastery as a condition for words to practice
 
     private static final String TAG = "MyApp_Practice";
