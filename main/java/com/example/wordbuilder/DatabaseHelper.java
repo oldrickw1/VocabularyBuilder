@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.view.translation.Translator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +37,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public void addOne(Translation translation) {
+        //TODO: Filter translations for correctness, whitespace etc.
+        TranslatorService translator = new TranslatorService();
         db = this.getWritableDatabase();
         foreignTableName = getOrCreateTable(translation.getForeignLanguage(), db);
         targetTableName = getOrCreateTable(translation.getTargetLanguage(), db);

@@ -1,5 +1,6 @@
 package com.example.wordbuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Translation {
@@ -14,14 +15,18 @@ public class Translation {
     public Translation(Language foreignLanguage, Language targetLanguage, String foreignWord, List<String> targetLanguageTranslations) {
         this.foreignLanguage = foreignLanguage;
         this.targetLanguage = targetLanguage;
-        this.foreignWord = foreignWord;
-        this.targetLanguageTranslations = targetLanguageTranslations;
+        this.foreignWord = foreignWord.toLowerCase().trim();
+        List<String> formattedTranslations = new ArrayList<>();
+        for (String uniqueTranslation : targetLanguageTranslations) {
+            formattedTranslations.add(uniqueTranslation.toLowerCase().trim());
+        }
+        this.targetLanguageTranslations = formattedTranslations;
         levelOfMastery = LevelOfMastery.NOOB;
     }
 
     public Translation(String foreignWord, String targetWord) {
-        this.foreignWord = foreignWord;
-        this.targetWord = targetWord;
+        this.foreignWord = foreignWord.toLowerCase().trim();
+        this.targetWord = targetWord.toLowerCase().trim();
 
     }
 
@@ -64,5 +69,13 @@ public class Translation {
 
     public void setTargetWord(String targetWord) {
         this.targetWord = targetWord;
+    }
+
+    public LevelOfMastery getLevelOfMastery() {
+        return levelOfMastery;
+    }
+
+    public void setLevelOfMastery(LevelOfMastery levelOfMastery) {
+        this.levelOfMastery = levelOfMastery;
     }
 }

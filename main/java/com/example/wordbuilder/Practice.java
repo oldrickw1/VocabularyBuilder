@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Practice extends AppCompatActivity {
-    //TODO add better feedback display than current toast messages.
     //TODO when a word is guessed correctly, update the level of mastery. Use the level of mastery as a condition for words to practice
+    //TODO: there's a big design flaw! Each and every possible translation should be accepted. Now, only unique translations are evaluated. The getTranslations method in the DatabaseHelper needs to be modified to include a list of related translations;
 
     private static final String TAG = "MyApp_Practice";
     List<Button> btnList;
@@ -42,16 +42,19 @@ public class Practice extends AppCompatActivity {
     }
 
     private void guessWord(View view) {
-        Button btn = (Button) view;
-        if (checkAnswer(btn.getText().toString())) {
-            Toast.makeText(this, "CORRECT!!!", Toast.LENGTH_SHORT).show();
+        Button guess = (Button) view;
+        if (checkAnswer(guess.getText().toString())) {
             incrementScore();
         }
         else {
-            Toast.makeText(this, "Your ans: "+ btn.getText().toString() + " Ans: " + word.getTargetWord(), Toast.LENGTH_SHORT).show();
+            displayMistake(guess);
             takeALife();
         }
         setNewQuiz();
+    }
+
+    private void displayMistake(Button guess) {
+        new WrongAnswerDialog(guess.getText().toString(), word).show(getSupportFragmentManager(), "Wrong Answer");
     }
 
     private void takeALife() {

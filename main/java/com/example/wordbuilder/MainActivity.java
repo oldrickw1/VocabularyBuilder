@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_scanWords.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, WordScan.class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, WordScanner.class);
+            startActivity(intent);
         });
 
     }
