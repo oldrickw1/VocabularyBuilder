@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.Random;
 
 public class Practice extends AppCompatActivity {
-    //TODO add better navigation instead of just relying on the back button
-    //TODO add unique constraint to button options
+    //TODO add better feedback display than current toast messages.
     //TODO when a word is guessed correctly, update the level of mastery. Use the level of mastery as a condition for words to practice
 
     private static final String TAG = "MyApp_Practice";
     List<Button> btnList;
     List<ImageView> heartList;
+    List<Translation> translations;
     int currentHeart;
     Random random = new Random();
     Translation word;
@@ -62,6 +62,7 @@ public class Practice extends AppCompatActivity {
     }
 
     private void setNewQuiz() {
+        translations = MyApplication.translations;
         setToBePracticed();
         setOptions();
     }
@@ -94,12 +95,18 @@ public class Practice extends AppCompatActivity {
     }
 
     private Translation getRandomWord() {
-        return MyApplication.translations.get( random.nextInt(MyApplication.translations.size()));
+        int randIndex = random.nextInt(translations.size());
+        return translations.size() < 3 ? translations.get(randIndex) : translations.remove(randIndex);
     }
 
     private void resetHearts() {
         heartList = new ArrayList<>(Arrays.asList(findViewById(R.id.heart1), findViewById(R.id.heart2), findViewById(R.id.heart3)));
         currentHeart = heartList.size();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 
 }
