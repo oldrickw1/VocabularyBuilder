@@ -10,14 +10,14 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.wordbuilder.databinding.ActivityWordScannerBinding
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -109,6 +109,12 @@ class WordScanner: AppCompatActivity() {
             imageCapture = ImageCapture.Builder()
                 .build()
 
+            val imageAnalyzer = ImageAnalysis.Builder()
+                .build()
+                .also {
+                    it.setAnalyzer(cameraExecutor, MyImageAnalyzer())
+                }
+
             // Select back camera as a default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -118,7 +124,7 @@ class WordScanner: AppCompatActivity() {
 
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture)
+                    this, cameraSelector, preview, imageCapture, imageAnalyzer)
 
             } catch(exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
@@ -163,6 +169,29 @@ class WordScanner: AppCompatActivity() {
                     "Permissions not granted by the user.",
                     Toast.LENGTH_SHORT).show()
                 finish()
+            }
+        }
+    }
+    private class MyImageAnalyzer : ImageAnalysis.Analyzer {
+        @ExperimentalGetImage
+        override fun analyze(image: ImageProxy) {
+            val mediaImage = image.image
+            if (mediaImage != null) {
+                val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+                val image = InputImage.fromMediaImage(mediaImage, image.imageInfo.rotationDegrees)
+                val result = recognizer.process(image)
+                    .addOnSuccessListener { visionText ->
+                        val resultText = visionText.text
+                        Log.i("OLLIE", "ABOUT TO LOG RESULT")
+                        Log.i("OLLIE", resultText)
+
+                    }
+                    .addOnFailureListener { e ->
+                        // Task failed with an exception
+                        // ...
+                    }
+                // Pass image to an ML Kit Vision API
+                // ...
             }
         }
     }
