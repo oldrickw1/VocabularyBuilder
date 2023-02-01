@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+//TODO learn about SQL Transactions and apply it to prevent inconsistent entries
 public class DatabaseHelper extends SQLiteOpenHelper {
     private final String TAG = "MyApp.DatabaseHelper";
 
