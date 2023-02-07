@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-//TODO learn about SQL Transactions and apply it to prevent inconsistent entries
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private final String TAG = "MyApp.DatabaseHelper";
 
@@ -40,13 +40,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //TODO: Filter translations for correctness, whitespace etc.
         TranslatorService translator = new TranslatorService();
         db = this.getWritableDatabase();
-        foreignTableName = getOrCreateTable(translation.getForeignLanguage(), db);
-        targetTableName = getOrCreateTable(translation.getTargetLanguage(), db);
+        //TODO test if the transaction is bug-free
+        try {
+            db.execSQL("BEGIN");
+            foreignTableName = getOrCreateTable(translation.getForeignLanguage(), db);
+            targetTableName = getOrCreateTable(translation.getTargetLanguage(), db);
+            long foreignId = insertIntoForeignTable(translation);
+            List<Long> targetIdList = insertIntoTargetTable(translation);
+            insertIntoLinkedTable(foreignId, targetIdList);
+        } catch (Exception e) {
+            db.execSQL("ROLLBACK");
+            e.printStackTrace();
+            return;
+        }
+        db.execSQL("COMMIT");
 
-        long foreignId = insertIntoForeignTable(translation);
-        List<Long> targetIdList = insertIntoTargetTable(translation);
-
-        insertIntoLinkedTable(foreignId, targetIdList);
 
         db.close();
     }

@@ -24,6 +24,9 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.log
 
+
+//TODO: Change this code so that the text in the captured photo will be extracted
+//TODO: Once I get the text, go to new activity (or dialog). Show the extracted words. User can decide to scan again, or to add the words to library (use translation API)
 class WordScanner: AppCompatActivity() {
     // this datatype binds my layout views to this variable (still needs to be done), so that I can access them more easily
     // in order for this to work, I need to include "buildFeatures {viewBinding true}" in the build.gradle (module) file
