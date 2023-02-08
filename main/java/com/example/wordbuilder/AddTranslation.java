@@ -37,14 +37,14 @@ public class AddTranslation extends AppCompatActivity {
 
             for (EditText et: Arrays.asList(et_translation1, et_translation2, et_translation3)) {
                 if (!isEmpty(et)) {
-                    translationList.add(et.getText().toString());
+                    translationList.add(et.getText().toString().trim().toLowerCase());
                 }
             }
 
             if (translationList.isEmpty()) {
                 return;
             }
-            MyApplication.databaseHelper.addOne(new Translation(Language.SPANISH, Language.ENGLISH, et_foreignWord.getText().toString(), translationList));
+            MyApplication.databaseHelper.addOne(new Translation(Language.SPANISH, Language.ENGLISH, et_foreignWord.getText().toString().trim().toLowerCase(), translationList));
             MyApplication.resetTranslations();
             startActivity(new Intent(this, MainActivity.class));
         });

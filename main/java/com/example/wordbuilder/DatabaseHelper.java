@@ -1,5 +1,6 @@
 package com.example.wordbuilder;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.view.translation.Translator;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,10 +39,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public void addOne(Translation translation) {
-        //TODO: Filter translations for correctness, whitespace etc.
-        TranslatorService translator = new TranslatorService();
+        //TODO: Filter translations for correctness
+
         db = this.getWritableDatabase();
         //TODO test if the transaction is bug-free
+        Log.i(TAG, tryInsertingIntoDatabase(translation) ? "Successfully added to Library" : "Failed to add to Library");
+
+    }
+
+    private boolean tryInsertingIntoDatabase(Translation translation) {
+        boolean insertedSuccessfully = false;
         try {
             db.execSQL("BEGIN");
             foreignTableName = getOrCreateTable(translation.getForeignLanguage(), db);
@@ -48,15 +56,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             long foreignId = insertIntoForeignTable(translation);
             List<Long> targetIdList = insertIntoTargetTable(translation);
             insertIntoLinkedTable(foreignId, targetIdList);
+            db.execSQL("COMMIT");
+            insertedSuccessfully = true;
         } catch (Exception e) {
             db.execSQL("ROLLBACK");
-            e.printStackTrace();
-            return;
+            Log.i(TAG, "An error occurred while trying to insert into db. Error: " + e.toString());
         }
-        db.execSQL("COMMIT");
-
-
-        db.close();
+        finally {
+            db.close();
+            return insertedSuccessfully;
+        }
     }
 
 
