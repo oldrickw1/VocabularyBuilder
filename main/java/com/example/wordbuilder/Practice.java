@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +19,16 @@ import java.util.Random;
 public class Practice extends AppCompatActivity {
     //TODO when a word is guessed correctly, update the level of mastery. Use the level of mastery as a condition for words to practice
     //TODO: there's a big design flaw! Each and every possible translation should be accepted. Now, only unique translations are evaluated. The getTranslations method in the DatabaseHelper needs to be modified to include a list of related translations;
+    /*
+        Elaboration on  the above:
+        This is more complicated than I anticipated. What I need, is a list of possible translations, which could be a list of hashMaps with a
+        foreign word as key and list of translations as values. One of those possible translations should then be selected randomly, and assigned
+        to a random button. The other 2 buttons then should get a text value of any target word except for those in the possible translations.
+        (I also need an update functionality if I want to add a possible translation to an
+        existing foreign word; see DatabaseHelper).
+
+        For now, I'll leave it and focus on the rest. The current program runs, but some correct answers will be signed as incorrect.
+     */
 
     private static final String TAG = "MyApp_Practice";
     List<Button> btnList;
@@ -65,7 +74,7 @@ public class Practice extends AppCompatActivity {
     }
 
     private void setNewQuiz() {
-        translations = MyApplication.translations;
+        translations = MyApplication.uniqueTranslationList;
         setToBePracticed();
         setOptions();
     }
@@ -89,7 +98,6 @@ public class Practice extends AppCompatActivity {
             }
         }
     }
-
 
     private void setToBePracticed() {
         word = getRandomWord();

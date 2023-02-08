@@ -21,8 +21,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final String TAG = "MyApp.DatabaseHelper";
 
     private SQLiteDatabase db;
-    String foreignTableName;
-    String targetTableName;
+    private String foreignTableName;
+    private String targetTableName;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context,  "translations.db" , null, 1);
@@ -37,18 +37,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
-
     public void addOne(Translation translation) {
-        //TODO: Filter translations for correctness
-
         db = this.getWritableDatabase();
-        //TODO test if the transaction is bug-free
         Log.i(TAG, tryInsertingIntoDatabase(translation) ? "Successfully added to Library" : "Failed to add to Library");
-
     }
 
     private boolean tryInsertingIntoDatabase(Translation translation) {
         boolean insertedSuccessfully = false;
+        //TODO test if the transaction is bug-free
         try {
             db.execSQL("BEGIN");
             foreignTableName = getOrCreateTable(translation.getForeignLanguage(), db);
@@ -70,6 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public List<Translation> getTranslations() {
+        // TODO: Refactor this so that instead of unique translations, possible translations get returned.
         SQLiteDatabase db = getReadableDatabase();
 
         String foreignTable = MyApplication.activeForeignLanguage.toString();

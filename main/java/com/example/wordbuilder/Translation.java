@@ -21,13 +21,12 @@ public class Translation {
             formattedTranslations.add(uniqueTranslation.toLowerCase().trim());
         }
         this.targetLanguageTranslations = formattedTranslations;
-        levelOfMastery = LevelOfMastery.NOOB;
+        levelOfMastery = LevelOfMastery.BEGINNER;
     }
 
     public Translation(String foreignWord, String targetWord) {
         this.foreignWord = foreignWord.toLowerCase().trim();
         this.targetWord = targetWord.toLowerCase().trim();
-
     }
 
     public String getForeignWord() {
