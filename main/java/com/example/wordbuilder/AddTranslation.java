@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//TODO: Languages are not dynamic. They are typed as constants in the code. Needs to be changed by looking up user settings (do this in MyApplication)
 public class AddTranslation extends AppCompatActivity {
     private final String TAG = "MyApp.AddTranslation";
     Button btn_submitTranslation;
@@ -35,22 +36,41 @@ public class AddTranslation extends AppCompatActivity {
         btn_submitTranslation.setOnClickListener(v -> {
             List<String> translationList = new ArrayList<>();
 
+            if (isEmpty(et_foreignWord)) {
+                return;
+            }
+            String foreignWord = format(extractStringFromEditText(et_foreignWord));
+
             for (EditText et: Arrays.asList(et_translation1, et_translation2, et_translation3)) {
                 if (!isEmpty(et)) {
                     translationList.add(et.getText().toString().trim().toLowerCase());
+                }
+                if (translationList.isEmpty()) {
+                    translationList.add(TranslationService.translate(foreignWord));
                 }
             }
 
             if (translationList.isEmpty()) {
                 return;
             }
-            MyApplication.databaseHelper.addOne(new Translation(Language.SPANISH, Language.ENGLISH, et_foreignWord.getText().toString().trim().toLowerCase(), translationList));
+            MyApplication.databaseHelper.addOne(new Translation(Language.SPANISH, Language.ENGLISH, foreignWord, translationList));
             MyApplication.resetTranslations();
             startActivity(new Intent(this, MainActivity.class));
         });
     }
 
+    private String extractStringFromEditText(EditText et_foreignWord) {
+        return et_foreignWord.getText().toString();
+    }
+
     public static boolean isEmpty(EditText editText) {
         return TextUtils.isEmpty(editText.getText().toString());
     }
+
+    private String format(String rawString) {
+        return rawString.trim().toLowerCase();
+    }
+
+
+
 }

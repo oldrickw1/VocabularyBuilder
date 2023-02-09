@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         btn_addWord = findViewById(R.id.btn_addTranslation);
         btn_scanWords = findViewById(R.id.btn_scanWords);
         MyApplication.resetTranslations();
+        TranslationService translationService = new TranslationService();
 
         btn_goToLib.setOnClickListener(v -> {
             Intent intent = new Intent(this, WordLibrary.class);

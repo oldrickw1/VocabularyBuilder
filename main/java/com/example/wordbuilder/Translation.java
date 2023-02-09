@@ -15,12 +15,8 @@ public class Translation {
     public Translation(Language foreignLanguage, Language targetLanguage, String foreignWord, List<String> targetLanguageTranslations) {
         this.foreignLanguage = foreignLanguage;
         this.targetLanguage = targetLanguage;
-        this.foreignWord = foreignWord.toLowerCase().trim();
-        List<String> formattedTranslations = new ArrayList<>();
-        for (String uniqueTranslation : targetLanguageTranslations) {
-            formattedTranslations.add(uniqueTranslation.toLowerCase().trim());
-        }
-        this.targetLanguageTranslations = formattedTranslations;
+        this.foreignWord = foreignWord;
+        this.targetLanguageTranslations = targetLanguageTranslations;
         levelOfMastery = LevelOfMastery.BEGINNER;
     }
 
